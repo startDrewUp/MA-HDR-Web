@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Floor Status</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="fixed-button-container">
+        <button id="back-button" style="display: none;">Back to Process View</button>
+    </div>
+    
+    <div id="container">
+        <h1 id="main-title">Header Floor Status</h1>
+        
+        <div id="filter-search">
+            <input type="text" id="job-filter" placeholder="Filter by Job#">
+            <input type="text" id="header-search" placeholder="Search headers">
+        </div>
+        
+        <div class="content-box">
+            <svg id="process-bar"></svg>
+            <div id="legend"></div>
+        </div>
+        
+        <div id="process-info"></div>
+        
+        <div class="table-container">
+            <table id="headers-table">
+                <thead>
+                    <tr>
+                        <th>Serial</th>
+                        <th>Start Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table content will be dynamically populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
