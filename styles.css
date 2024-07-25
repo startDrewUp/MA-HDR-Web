@@ -1,19 +1,20 @@
 :root {
-    --primary-color: #007AFF;
-    --secondary-color: #5AC8FA;
-    --background-color: #F2F2F7;
-    --text-color: #1C1C1E;
-    --border-color: #C7C7CC;
-    --hover-color: #E5E5EA;
+    --primary-color: #f1e539;
+    --background-dark: #2c2c2c;
+    --background-light: #f5f5f5;
+    --text-color-dark: #e0e0e0;
+    --text-color-light: #333333;
+    --border-color: #4a4a4a;
+    --hover-color: #3a3a3a;
 }
 
 body, html {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    background-color: var(--background-dark);
+    color: var(--text-color-dark);
+    line-height: 1.6;
 }
 
 #container {
@@ -29,7 +30,7 @@ body, html {
     font-size: 48px;
     font-weight: 800;
     margin-bottom: 40px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 #process-bar {
@@ -38,7 +39,8 @@ body, html {
     margin-bottom: 60px;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    background-color: var(--background-light);
 }
 
 #legend {
@@ -75,14 +77,15 @@ body, html {
     font-size: 16px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    background-color: white;
+    background-color: var(--background-light);
+    color: var(--text-color-light);
     transition: all 0.3s ease;
 }
 
 #filter-search input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(241, 229, 57, 0.2);
 }
 
 #headers-table, #history-table {
@@ -90,10 +93,10 @@ body, html {
     border-collapse: separate;
     border-spacing: 0;
     margin-top: 20px;
-    background-color: white;
+    background-color: var(--background-light);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 #headers-table th, #headers-table td,
@@ -101,11 +104,12 @@ body, html {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
+    color: var(--text-color-light);
 }
 
 #headers-table th, #history-table th {
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
     font-weight: 600;
 }
 
@@ -143,11 +147,12 @@ body, html {
 }
 
 #process-info {
-    background-color: white;
+    background-color: var(--background-light);
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    color: var(--text-color-light);
 }
 
 #process-info p {
@@ -156,11 +161,11 @@ body, html {
 }
 
 .content-box {
-    background-color: white;
+    background-color: var(--background-light);
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .table-container {
@@ -178,18 +183,18 @@ body, html {
     padding: 12px 24px;
     font-size: 16px;
     font-weight: 600;
-    color: white;
+    color: var(--text-color-light);
     background-color: var(--primary-color);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease, opacity 0.3s ease;
     opacity: 0.9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #back-button:hover {
-    background-color: #0056b3;
+    background-color: #e0d428;
     opacity: 1;
 }
 
@@ -200,12 +205,13 @@ body, html {
 }
 
 .info-card {
-    background-color: white;
+    background-color: var(--background-light);
     border-radius: 10px;
     padding: 30px;
     width: 28%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     text-align: center;
+    color: var(--text-color-light);
 }
 
 .info-card h2 {
@@ -217,6 +223,19 @@ body, html {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 0;
+}
+
+#heatmap-container {
+    margin-bottom: 30px;
+    background-color: var(--background-light);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+#heatmap-container svg {
+    max-width: 100%;
+    height: auto;
 }
 
 @media (max-width: 768px) {
@@ -258,4 +277,17 @@ body, html {
         width: auto;
         margin-bottom: 20px;
     }
+}
+
+#heatmap-container {
+    margin-bottom: 30px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#heatmap-container svg {
+    max-width: 100%;
+    height: auto;
 }
