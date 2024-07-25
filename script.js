@@ -115,6 +115,83 @@ function createProcessBar(data) {
     createLegend(filteredData, totalHeaders);
 }
 
+function createHeatmap(history) {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', '300');
+    svg.setAttribute('viewBox', '0 0 1000 500');
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+    // Define facility layout
+    const facilityLayout = [
+        { name: "Plate/Nozzle Bevel", x: 50, y: 50, width: 100, height: 100 },
+        { name: "Plate Fit-Up", x: 200, y: 50, width: 100, height: 100 },
+        { name: "Root Pass", x: 350, y: 50, width: 100, height: 100 },
+        { name: "External Welding", x: 500, y: 50, width: 100, height: 100 },
+        { name: "Press/Saw", x: 650, y: 50, width: 100, height: 100 },
+        { name: "Drilling", x: 800, y: 50, width: 100, height: 100 },
+        { name: "Milling", x: 50, y: 200, width: 100, height: 100 },
+        { name: "End Block Fit-Up", x: 200, y: 200, width: 100, height: 100 },
+        { name: "End Block Weld", x: 350, y: 200, width: 100, height: 100 },
+        { name: "Nozzle Fit-Up", x: 500, y: 200, width: 100, height: 100 },
+        { name: "Nozzle to Header Weld", x: 650, y: 200, width: 100, height: 100 },
+        { name: "Initial Clean-Up", x: 800, y: 200, width: 100, height: 100 },
+        { name: "PWHT Clean-Up", x: 50, y: 350, width: 100, height: 100 },
+        { name: "Blasting", x: 200, y: 350, width: 100, height: 100 },
+        { name: "Painting", x: 350, y: 350, width: 100, height: 100 }
+    ];
+
+    // Draw facility layout
+    facilityLayout.forEach(area => {
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.setAttribute('x', area.x);
+        rect.setAttribute('y', area.y);
+        rect.setAttribute('width', area.width);
+        rect.setAttribute('height', area.height);
+        rect.setAttribute('fill', '#e0e0e0');
+        rect.setAttribute('stroke', '#000');
+        svg.appendChild(rect);
+
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute('x', area.x + area.width / 2);
+        text.setAttribute('y', area.y + area.height / 2);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'middle');
+        text.setAttribute('font-size', '12');
+        text.textContent = area.name;
+        svg.appendChild(text);
+    });
+
+    // Draw path
+    let path = "";
+    history.forEach((entry, index) => {
+        const area = facilityLayout.find(a => a.name === entry.process);
+        if (area) {
+            const x = area.x + area.width / 2;
+            const y = area.y + area.height / 2;
+            path += (index === 0 ? `M ${x} ${y}` : `L ${x} ${y}`);
+
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', y);
+            circle.setAttribute('r', 5);
+            circle.setAttribute('fill', 'red');
+            svg.appendChild(circle);
+        }
+    });
+
+    const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    pathElement.setAttribute('d', path);
+    pathElement.setAttribute('fill', 'none');
+    pathElement.setAttribute('stroke', 'red');
+    pathElement.setAttribute('stroke-width', 3);
+    svg.appendChild(pathElement);
+
+    return svg;
+}
+
+
+
 function createLegend(data, totalHeaders) {
     console.log("Creating legend with data:", data);
     const legend = document.getElementById('legend');
@@ -241,26 +318,31 @@ async function showHeaderHistory(serial) {
         
         const container = document.getElementById('container');
         container.innerHTML = `
-        <h1 id="main-title">Header History - ${serial}</h1>
-        <table id="history-table">
-            <thead>
-                <tr>
-                    <th>Process</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${history.map(entry => `
+            <h1 id="main-title">Header History - ${serial}</h1>
+            <div id="heatmap-container"></div>
+            <table id="history-table">
+                <thead>
                     <tr>
-                        <td>${entry.process}</td>
-                        <td>${entry.startTime}</td>
-                        <td>${entry.endTime}</td>
+                        <th>Process</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
                     </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
+                </thead>
+                <tbody>
+                    ${history.map(entry => `
+                        <tr>
+                            <td>${entry.process}</td>
+                            <td>${entry.startTime}</td>
+                            <td>${entry.endTime}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+
+        const heatmapContainer = document.getElementById('heatmap-container');
+        const heatmap = createHeatmap(history);
+        heatmapContainer.appendChild(heatmap);
 
     } catch (error) {
         console.error("Error fetching header history:", error);
